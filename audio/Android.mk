@@ -42,8 +42,9 @@ LOCAL_SHARED_LIBRARIES := \
 	libbluetoothd \
 	libbtio \
 	libdbus \
-	libglib
-
+	libglib \
+	liblog \
+	libcutils
 
 LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)/bluez-plugin
 LOCAL_UNSTRIPPED_PATH := $(TARGET_OUT_SHARED_LIBRARIES_UNSTRIPPED)/bluez-plugin

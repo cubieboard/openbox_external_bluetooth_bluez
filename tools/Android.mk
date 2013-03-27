@@ -132,17 +132,33 @@ include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES:= \
 	hciattach.c \
+	hciattach_usibcm4329.c \
+	mac.c \
 	hciattach_ath3k.c \
 	hciattach_qualcomm.c \
 	hciattach_st.c \
 	hciattach_ti.c \
 	hciattach_tialt.c \
+	hciattach_rtk.c \
 
 LOCAL_CFLAGS:= \
 	-DVERSION=\"4.93\" \
 	-D__BSD_VISIBLE=1 \
 	-DCONFIGDIR=\"/etc/bluetooth\" \
         -DNEED_PPOLL
+
+ifeq ($(SW_BOARD_HAVE_BLUETOOTH_NAME), usibm01a)
+LOCAL_CFLAGS+=-DBCM_BT_USIBM01A
+endif
+
+ifeq ($(SW_BOARD_HAVE_BLUETOOTH_NAME), bcm40183)
+LOCAL_CFLAGS+=-DBCM_BT_BCM40183
+endif
+
+# realtek rtl8723as combo bt
+ifeq ($(SW_BOARD_HAVE_BLUETOOTH_RTK), true)
+LOCAL_CFLAGS += -DSW_BOARD_HAVE_BLUETOOTH_RTK
+endif
 
 LOCAL_C_INCLUDES:=\
 	$(LOCAL_PATH)/../lib \
@@ -211,6 +227,7 @@ LOCAL_C_INCLUDES:=\
 LOCAL_SHARED_LIBRARIES := \
 	libbluetooth libbluetoothd
 
+LOCAL_MODULE_TAGS := eng
 LOCAL_MODULE:=bccmd
 
 include $(BUILD_EXECUTABLE)

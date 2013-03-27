@@ -45,7 +45,7 @@
 #include <dbus/dbus.h>
 #include <gdbus.h>
 
-#include "log.h"
+//#include "log.h"
 #include "error.h"
 #include "uinput.h"
 #include "adapter.h"
@@ -58,6 +58,24 @@
 #include "glib-helper.h"
 #include "btio.h"
 #include "dbus-common.h"
+
+
+
+//------------------------
+//#define LOG_NDEBUG 0
+#define LOG_TAG "AVRCP"
+#include <cutils/log.h>
+
+#define ENABLE_DEBUG
+
+#ifdef ENABLE_DEBUG
+#define DBG LOGD
+#else
+#define DBG(fmt, arg...)
+#endif
+
+#define ERR LOGE
+//-------------------------
 
 #define AVCTP_PSM 23
 
@@ -379,6 +397,7 @@ static void handle_panel_passthrough(struct control *control,
 			continue;
 
 		DBG("AVRCP: %s %s", key_map[i].name, status);
+		DBG("AVRCP: action=0x%x keycode=%d", operands[0]&0x7F, key_map[i].uinput);
 
 		key_quirks = control->key_quirks[key_map[i].avrcp];
 
